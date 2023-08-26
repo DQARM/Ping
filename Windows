@@ -1,0 +1,16 @@
+@echo off
+setlocal
+
+set "subnet=192.168.x."
+
+for /L %%i in (1,1,254) do (
+    set "ip=%subnet%%%i"
+    ping -n 1 -w 1000 %ip% | find "TTL=" > nul
+    if not errorlevel 1 (
+        echo %ip% is reachable
+    ) else (
+        echo %ip% is not reachable
+    )
+)
+
+endlocal
